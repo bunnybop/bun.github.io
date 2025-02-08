@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת שעות - יום רביעי 5 בפברואר</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./images/cat.ico">
+
+    <style>
+        :root {
+            --primary-color: #ff69b4;
+            --hover-color: #ff1493;
+            --border-color: #ffd1dc;
+            --text-color: #4a4a4a;
+            --inactive-color: #fff5f8;
+            --gradient-start: #ff69b4;
+            --gradient-end: #ff9ecd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Hebrew', 'Arial', sans-serif;
+            cursor: url('/images/defu.png') 16 16, default;
+        }
+
+        .back-button {
+            cursor: url('/images/hover.png') 16 16, pointer;
+        }
+
+        .period:hover {
+            cursor: url('/images/hover.png') 16 16, pointer;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff5f8 0%, #fff 100%);
+            padding: 2rem;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+            .header h1 {
+                background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+        .back-button {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+            .back-button:hover {
+                transform: translateY(-50%) scale(1.05);
+                box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            }
+
+        .schedule {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .period {
+            display: grid;
+            grid-template-columns: 100px 150px 1fr;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .period:hover {
+                background: var(--inactive-color);
+                transform: translateX(-10px);
+            }
+
+            .period:last-child {
+                border-bottom: none;
+            }
+
+        .time {
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: right;
+        }
+
+        .subject {
+            font-weight: bold;
+            color: var(--text-color);
+            position: relative;
+            padding-right: 2rem;
+            text-align: right;
+        }
+
+            .subject::before {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1.5rem;
+                height: 1.5rem;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+
+        .data-structures::before {
+            content: '💻';
+        }
+
+        .cyber::before {
+            content: '🔒';
+        }
+
+        .math::before {
+            content: '📐';
+        }
+
+        .sports::before {
+            content: '⚽';
+        }
+
+        .history::before {
+            content: '🏛️';
+        }
+
+        .window::before {
+            content: '🥳';
+        }
+
+        .content {
+            background: var(--inactive-color);
+            border-radius: 15px;
+            padding: 1rem;
+            min-height: 60px;
+            text-align: right;
+        }
+
+            .content p {
+                margin: 0;
+                color: var(--text-color);
+            }
+
+        .content-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .period {
+                grid-template-columns: 80px 120px 1fr;
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-button">חזרה ←</a>
+            <h1>יום רביעי - 5 בפברואר</h1>
+        </div>
+        <div class="schedule">
+            <div class="period">
+                <div class="time">שעה 0<br>7:45-8:30</div>
+                <div class="subject data-structures">מבנה נתונים</div>
+                <div class="content">
+                    <p class="content-placeholder">בוטל</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה ראשונה<br>8:30-9:15</div>
+                <div class="subject cyber">מבוא לסייבר</div>
+                <div class="content">
+                    <p class="content-placeholder">.הרצאה ביד לבנים איזה כיף</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה שנייה<br>9:15-10:00</div>
+                <div class="subject cyber">מבוא לסייבר</div>
+                <div class="content">
+                    <p class="content-placeholder">וואלה היה כיף.</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה שלישית<br>10:15-11:00</div>
+                <div class="subject math">מתמטיקה</div>
+                <div class="content" style="display: flex; flex-direction: row; align-items: center; gap: 1rem;">
+                    <p class="content-placeholder">
+                        *אני כאשר לחזור עם קצר בגשם
+                        להדסה (השיעור התחיל ב10:45).
+                    </p>
+                    <img src="images/run.gif" width="150" />
+                  
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה רביעית<br>11:00-11:45</div>
+                <div class="subject math">מתמטיקה</div>
+                <div class="content">
+                    <p class="content-placeholder">בעיות קיצון זה נורא.</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה חמישית<br>12:10-12:55</div>
+                <div class="subject math">מתמטיקה</div>
+                <div class="content">
+                    <p class="content-placeholder">וואי המבחן עוד שבוע הלך עלינו.</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה שישית<br>12:55-13:40</div>
+                <div class="subject sports">ספורט</div>
+                <div class="content">
+                    <p class="content-placeholder">המצב היה כל כך נורא, שבוטל לבנים (ולהילי)
+                    ספורט ונשארו איזה 15 ילדים לעוד שעה של מתמטיקה.</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה שביעית<br>13:55-14:40</div>
+                <div class="subject history">היסטוריה</div>
+                <div class="content">
+                    <p class="content-placeholder">ליה ביטלה</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה שמינית<br>14:40-15:25</div>
+                <div class="subject window">חלון</div>
+                <div class="content">
+                    <p class="content-placeholder">דאמ</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה תשיעית<br>15:35-16:20</div>
+                <div class="subject cyber">מבוא לסייבר</div>
+                <div class="content">
+                    <p class="content-placeholder">למדנו טיפה על פולימורפיזם</p>
+                </div>
+            </div>
+            <div class="period">
+                <div class="time">שעה עשירית<br>16:20-17:05</div>
+                <div class="subject cyber">מבוא לסייבר</div>
+                <div class="content">
+                    <p class="content-placeholder">המשכנו לתרגל</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
