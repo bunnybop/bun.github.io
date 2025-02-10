@@ -26,17 +26,6 @@
             cursor: url('/images/defu.png') 16 16, default;
         }
 
-        .back-button {
-            /* existing styles */
-            cursor: url('/images/hover.png') 16 16, pointer;
-        }
-
-        .period:hover {
-            /* existing styles */
-            cursor: url('/images/hover.png') 16 16, pointer;
-        }
-
-
         body {
             background: linear-gradient(135deg, #fff5f8 0%, #fff 100%);
             padding: 2rem;
@@ -75,6 +64,7 @@
             border-radius: 25px;
             text-decoration: none;
             transition: all 0.3s ease;
+            cursor: url('/images/hover.png') 16 16, pointer;
         }
 
             .back-button:hover {
@@ -103,6 +93,7 @@
             .period:hover {
                 background: var(--inactive-color);
                 transform: translateX(-10px);
+                cursor: url('/images/hover.png') 16 16, pointer;
             }
 
             .period:last-child {
@@ -156,16 +147,21 @@
         }
 
         .content {
+            position: relative;
             background: var(--inactive-color);
             border-radius: 15px;
             padding: 1rem;
             min-height: 60px;
             text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
             .content p {
                 margin: 0;
                 color: var(--text-color);
+                flex-grow: 1;
             }
 
         .content-placeholder {
@@ -173,6 +169,198 @@
             font-style: italic;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+            .modal.show {
+                opacity: 1;
+            }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 80%;
+            max-height: 80vh;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: calc(80vh - 40px);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+            .close-modal:hover {
+                color: #000;
+            }
+
+        /* Notes Styles */
+        .notes-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .notes-btn {
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: url('/images/hover.png') 16 16, pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+            }
+        }
+
+        .notes-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        .notes-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .notes-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+        }
+
+            .notes-btn:hover::before {
+                width: 100%;
+                height: 100%;
+            }
+
+        .notes-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .notes-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        .notes-text {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+            margin-top: 8px;
+            pointer-events: none;
+        }
+
+        .notes-container::after {
+            content: 'לחץ עליי!';
+            position: absolute;
+            top: 50%;
+            left: 120%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+        }
+
+        .notes-container.show-hint::after {
+            opacity: 1;
+            visibility: visible;
+            animation: fadeOutAfterDelay 3s forwards;
+        }
+
+        @keyframes fadeOutAfterDelay {
+            0%, 80% {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .notes-container:hover .notes-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        /* Media Queries */
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
@@ -185,6 +373,19 @@
 
             .header h1 {
                 font-size: 2rem;
+            }
+
+            .notes-btn {
+                width: 35px;
+                height: 35px;
+            }
+
+                .notes-btn i {
+                    font-size: 1rem;
+                }
+
+            .notes-text {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -200,22 +401,37 @@
                 <div class="time">שעה 0<br>7:45-8:30</div>
                 <div class="subject data-structures">מבנה נתונים</div>
                 <div class="content">
+
                     <p class="content-placeholder">למדנו על עצים בינאריים.</p>
+                    <div class="notes-container" style="margin-left: 4">
+                       
+                        <div class="notes-text">תמונה מהמחברת</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
                 <div class="time">שעה ראשונה<br>8:30-9:15</div>
                 <div class="subject data-structures">מבנה נתונים</div>
                 <div class="content">
-                    <p class="content-placeholder">אילת המשיכה לדבר....</p>
+                    <p class="content-placeholder">אילת המשיכה לדבר.... </p>
+                    <div class="notes-container" style="margin-left: 4">
+                        <a href="images/b.pdf" target="_blank">מצגת על עצים</a>
+                        <div class="notes-text">לחצי עליי!</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
                 <div class="time">שעה שנייה<br>9:15-10:00</div>
                 <div class="subject data-structures">מבנה נתונים</div>
                 <div class="content">
-                    <p class="content-placeholder">השלמנו משימות ובסוף לא עשינו
-                    כלום עם עצים.</p>
+                    <p class="content-placeholder">
+                        השלמנו משימות ובסוף לא עשינו
+                        כלום עם עצים.
+                    </p>
+                    <div class="notes-container" style="margin-left: 4">
+                       
+                        <div class="notes-text">תמונה מהמחברת</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
@@ -223,22 +439,37 @@
                 <div class="subject math">מתמטיקה</div>
                 <div class="content">
                     <p class="content-placeholder">למדנו דברים חדשים בבעיות קיצון.</p>
+                    <div class="notes-container" style="margin-left: 4">
+                        
+                        <div class="notes-text">תמונה מהמחברת</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
                 <div class="time">שעה רביעית<br>11:00-11:45</div>
                 <div class="subject math">מתמטיקה</div>
                 <div class="content">
-                    <p class="content-placeholder">הדסה פשוט ניסתה לדבר לא ממש הצליחה,
-                    אבל בכל זאת למדנו.</p>
+                    <p class="content-placeholder">
+                        הדסה פשוט ניסתה לדבר לא ממש הצליחה,
+                        אבל בכל זאת למדנו.
+                    </p>
+                    <div class="notes-container" style="margin-left: 4">
+                        <button class="notes-btn" onclick="showNotes('f1.png')">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                        <div class="notes-text">תמונה מהמחברת</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
                 <div class="time">שעה חמישית<br>12:10-12:55</div>
                 <div class="subject education">חינוך</div>
                 <div class="content">
-                    <p class="content-placeholder">דיברנו על פולין, ורועי סיפר
-                    סיפורים מצחיקים על הפעמים הקודמות שהיה בפולין.</p>
+                    <p class="content-placeholder">
+                        דיברנו על פולין, ורועי סיפר
+                        סיפורים מצחיקים על הפעמים הקודמות שהיה בפולין.
+                    </p>
+                  
                 </div>
             </div>
             <div class="period">
@@ -246,23 +477,57 @@
                 <div class="subject sports">ספורט</div>
                 <div class="content">
                     <p class="content-placeholder">בוטל נראה לי.</p>
+                    <div class="notes-container" style="margin-left: 4">
+                        
+                        <div class="notes-text">תמונה מהמחברת</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
                 <div class="time">שעה שביעית<br>13:55-14:40</div>
                 <div class="subject literature">ספרות ואהבה</div>
                 <div class="content" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="images/Ih.gif" style="margin: auto;" width="100" />
+                    <img src="/images/Ih.gif" style="margin: auto;" width="100" />
                 </div>
             </div>
             <div class="period">
                 <div class="time">שעה שמינית<br>14:40-15:25</div>
                 <div class="subject literature">ספרות ואהבה</div>
                 <div class="content" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="images/Ih.gif" style="margin: auto;" width="100" />
+                    <img src="/images/Ih.gif" style="margin: auto;" width="100" />
                 </div>
             </div>
+
         </div>
     </div>
+    <div id="notesModal" class="modal" onclick="hideModal()">
+        <div class="modal-content">
+            <span class="close-modal" onclick="hideModal()">&times;</span>
+            <img id="modalImage" class="modal-img" src="" alt="Notes">
+        </div>
+    </div>
+    <script>
+        function showNotes(imageFileName) {
+            const modal = document.getElementById('notesModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = '/images/' + imageFileName;
+            modal.style.display = 'block';
+            // Force reflow
+            modal.offsetHeight;
+            modal.classList.add('show');
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('notesModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        document.querySelector('.modal-content').onclick = function (e) {
+            e.stopPropagation();
+        };
+    </script>
 </body>
 </html>

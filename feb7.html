@@ -181,6 +181,388 @@
             }
         }
     </style>
+    <style>
+        :root {
+            --primary-color: #ff69b4;
+            --hover-color: #ff1493;
+            --border-color: #ffd1dc;
+            --text-color: #4a4a4a;
+            --inactive-color: #fff5f8;
+            --gradient-start: #ff69b4;
+            --gradient-end: #ff9ecd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Hebrew', 'Arial', sans-serif;
+            cursor: url('/images/defu.png') 16 16, default;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff5f8 0%, #fff 100%);
+            padding: 2rem;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+            .header h1 {
+                background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+        .back-button {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: url('/images/hover.png') 16 16, pointer;
+        }
+
+            .back-button:hover {
+                transform: translateY(-50%) scale(1.05);
+                box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            }
+
+        .schedule {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .period {
+            display: grid;
+            grid-template-columns: 100px 150px 1fr;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .period:hover {
+                background: var(--inactive-color);
+                transform: translateX(-10px);
+                cursor: url('/images/hover.png') 16 16, pointer;
+            }
+
+            .period:last-child {
+                border-bottom: none;
+            }
+
+        .time {
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: right;
+        }
+
+        .subject {
+            font-weight: bold;
+            color: var(--text-color);
+            position: relative;
+            padding-right: 2rem;
+            text-align: right;
+        }
+
+            .subject::before {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1.5rem;
+                height: 1.5rem;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+
+        .data-structures::before {
+            content: '💻';
+        }
+
+        .math::before {
+            content: '📐';
+        }
+
+        .education::before {
+            content: '🎓';
+        }
+
+        .sports::before {
+            content: '⚽';
+        }
+
+        .literature::before {
+            content: '📚';
+        }
+
+        .content {
+            position: relative;
+            background: var(--inactive-color);
+            border-radius: 15px;
+            padding: 1rem;
+            min-height: 60px;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .content p {
+                margin: 0;
+                color: var(--text-color);
+                flex-grow: 1;
+            }
+
+        .content-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+            .modal.show {
+                opacity: 1;
+            }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 80%;
+            max-height: 80vh;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: calc(80vh - 40px);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+            .close-modal:hover {
+                color: #000;
+            }
+
+        /* Notes Styles */
+        .notes-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .notes-btn {
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: url('/images/hover.png') 16 16, pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+            }
+        }
+
+        .notes-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        .notes-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .notes-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+        }
+
+            .notes-btn:hover::before {
+                width: 100%;
+                height: 100%;
+            }
+
+        .notes-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .notes-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        .notes-text {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+            margin-top: 8px;
+            pointer-events: none;
+        }
+
+        .notes-container::after {
+            content: 'לחץ עליי!';
+            position: absolute;
+            top: 50%;
+            left: 120%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+        }
+
+        .notes-container.show-hint::after {
+            opacity: 1;
+            visibility: visible;
+            animation: fadeOutAfterDelay 3s forwards;
+        }
+
+        @keyframes fadeOutAfterDelay {
+            0%, 80% {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .notes-container:hover .notes-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .period {
+                grid-template-columns: 80px 120px 1fr;
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .notes-btn {
+                width: 35px;
+                height: 35px;
+            }
+
+                .notes-btn i {
+                    font-size: 1rem;
+                }
+
+            .notes-text {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -193,8 +575,16 @@
                 <div class="time">שעה ראשונה<br>8:30-9:15</div>
                 <div class="subject hebrew">לשון</div>
                 <div class="content">
-                    <p class="content-placeholder">תרגלנו לקראת הבוחן בשעה רביעית, על
-                    נושא מופרש או סתמי ונשוא רגיל או מורחב.</p>
+                    <p class="content-placeholder">
+                        תרגלנו לקראת הבוחן בשעה רביעית, על
+                        נושא מופרש או סתמי ונשוא רגיל או מורחב.
+                    </p>
+                    <div class="notes-container" style="margin-left: 4">
+                        <button class="notes-btn" onclick="showNotes('Tobi.jpg')">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                        <div class="notes-text">תמונה מהמחברת</div>
+                    </div>
                 </div>
             </div>
             <div class="period">
@@ -215,8 +605,10 @@
                 <div class="time">שעה רביעית<br>11:00-11:45</div>
                 <div class="subject hebrew">לשון</div>
                 <div class="content">
-                    <p class="content-placeholder">בוחן על מה שלמדנו בשעה הראשונה
-                    היה סבבה בת'כלס נראה לי.</p>
+                    <p class="content-placeholder">
+                        בוחן על מה שלמדנו בשעה הראשונה
+                        היה סבבה בת'כלס נראה לי.
+                    </p>
                 </div>
             </div>
             <div class="period">
@@ -228,5 +620,34 @@
             </div>
         </div>
     </div>
+    <div id="notesModal" class="modal" onclick="hideModal()">
+        <div class="modal-content">
+            <span class="close-modal" onclick="hideModal()">&times;</span>
+            <img id="modalImage" class="modal-img" src="" alt="Notes">
+        </div>
+    </div>
+    <script>
+        function showNotes(imageFileName) {
+            const modal = document.getElementById('notesModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = '/images/' + imageFileName;
+            modal.style.display = 'block';
+            // Force reflow
+            modal.offsetHeight;
+            modal.classList.add('show');
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('notesModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        document.querySelector('.modal-content').onclick = function (e) {
+            e.stopPropagation();
+        };
+    </script>
 </body>
 </html>
