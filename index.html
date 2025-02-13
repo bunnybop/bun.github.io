@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,6 +35,28 @@
             }
         }
 
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         :root {
             --primary-color: #ff69b4;
             --hover-color: #ff1493;
@@ -44,6 +66,7 @@
             --gradient-start: #ff69b4;
             --gradient-end: #ff9ecd;
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -52,7 +75,6 @@
             cursor: url('images/defu.png') 16 16, default;
         }
 
-
         body {
             background: linear-gradient(135deg, #fff5f8 0%, #fff 100%);
             padding: 2rem;
@@ -60,7 +82,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -68,7 +90,6 @@
             text-align: center;
             margin-bottom: 2rem;
             color: var(--text-color);
-            position: relative;
         }
 
             .header h1 {
@@ -77,15 +98,84 @@
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 font-size: 2.5rem;
-                position: relative;
-                display: inline-block;
             }
 
             .header p {
-                color: var(--text-color);
+                color: hotpink;
+                font-family: Calibri;
                 font-size: 1.2rem;
-                margin-top: 0.5rem;
             }
+
+        .main-content {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Assignments Panel Styles */
+        .assignments-panel {
+            width: 350px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+            padding: 2rem;
+            margin-right: 2rem;
+        }
+
+        .assignments-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+            .assignments-header h2 {
+                background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+        .assignment-item {
+            background: linear-gradient(135deg, #fff5f8, #fff);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+            .assignment-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+                border-color: var(--primary-color);
+            }
+
+            .assignment-item h3 {
+                color: var(--primary-color);
+                margin-bottom: 0.5rem;
+                font-size: 1.2rem;
+            }
+
+            .assignment-item p {
+                color: var(--text-color);
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+        .assignment-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: rotate 4s linear infinite;
+        }
+
+        /* Calendar styles */
+        .calendar-section {
+            flex: 1;
+            max-width: 1000px;
+        }
 
         .calendar {
             background: white;
@@ -150,7 +240,6 @@
                 background: var(--inactive-color);
             }
 
-
                 .day.inactive:hover {
                     background: var(--inactive-color);
                     transform: none;
@@ -183,23 +272,31 @@
                 animation: float 2s ease-in-out infinite;
             }
 
-        .sparkles {
-            position: absolute;
-            pointer-events: none;
-        }
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-content {
+                flex-direction: column;
+            }
 
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background-color: #ffd1dc;
-            animation: sparkle 1.5s ease-in-out infinite;
+            .assignments-panel {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 2rem;
+                order: -1;
+            }
+
+            .calendar-section {
+                width: 100%;
+            }
         }
 
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
             }
 
             .day .date {
@@ -209,175 +306,259 @@
             .day .month {
                 font-size: 0.7rem;
             }
-
-            .header h1 {
-                font-size: 2rem;
-            }
         }
     </style>
+    <style>
+        .assignments-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Creates 2 columns */
+            grid-gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .assignment-item {
+            background: linear-gradient(135deg, #fff5f8, #fff);
+            border-radius: 15px;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.1);
+            text-decoration: none; /* Remove default link styling */
+            display: block; /* Make the entire box clickable */
+            cursor: url('images/hover.png') 16 16, pointer; /* Use custom cursor */
+        }
+
+            /* Move hover effects to the anchor tag */
+            .assignment-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+                border-color: var(--primary-color);
+            }
+
+            .assignment-item h3 {
+                color: var(--primary-color);
+                margin-bottom: 0.25rem;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+            }
+
+            .assignment-item p {
+                color: var(--text-color);
+                font-size: 0.8rem;
+                line-height: 1.3;
+            }
+
+        .assignment-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Adjust panel width for better fit */
+        .assignments-panel {
+            width: 320px;
+            padding: 1.5rem;
+        }
+        </style>
 </head>
 <body>
     <div class="container">
-        <div class="header"> 
+        <div class="header">
             <h1>✈️ לטוס לחו"ל ולהפסיד חומר?! לא במקרה שלך ✈️</h1>
             <p style="color: hotpink; font-family: Calibri">🌟 טובי, ליה ואפילו הדסה התגעגעו 🌟</p>
         </div>
-        <div class="calendar">
-            <div class="weekdays">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
+
+        <div class="main-content">
+            <div class="assignments-panel">
+                <div class="assignments-panel">
+                    <div class="assignments-header">
+                        <h2>משימות שבועיות</h2>
+                    </div>
+                    <div class="assignments-container">
+                        <a href="https://moodle.mashov.info/mekif-hasharon-rotberg/mod/assign/view.php?id=46514" target="_blank" class="assignment-item">
+                            <h3><span class="assignment-icon">💻</span>סייבר</h3>
+                            <p>1 -scapy - תרגילי מחקר - sniff</p>
+                        </a>
+                        <a href="https://moodle.mashov.info/mekif-hasharon-rotberg/mod/assign/view.php?id=46508" target="_blank" class="assignment-item">
+                            <h3><span class="assignment-icon">🖥️</span>סייבר</h3>
+                            <p>5- DNS - תרגיל מחקר</p>
+                        </a>
+                        <a href="https://moodle.mashov.info/mekif-hasharon-rotberg/mod/assign/view.php?id=47054" target="_blank" class="assignment-item">
+                            <h3><span class="assignment-icon">🌐</span>מבנה נתונים</h3>
+                            <p>8 - עצים בינאריים - תרגיל מתקדם</p>
+                        </a>
+                        <a href="https://moodle.mashov.info/mekif-hasharon-rotberg/mod/assign/view.php?id=46766" target="_blank" class="assignment-item">
+                            <h3><span class="assignment-icon">🖥️</span>תכנות</h3>
+                            <p>8 - פולימורפיזם - מערכת שכר - תרגול</p>
+                        </a>
+                        <a href="https://moodle.mashov.info/mekif-hasharon-rotberg/mod/assign/view.php?id=46767" target="_blank" class="assignment-item">
+                            <h3><span class="assignment-icon">🌐</span>תכנות</h3>
+                            <p>9 - פולימורפיזם - מעקבים</p>
+                        </a>
+                        <a href="https://moodle.mashov.info/mekif-hasharon-rotberg/mod/assign/view.php?id=46764" target="_blank" class="assignment-item">
+                            <h3><span class="assignment-icon">🖥️</span>תכנות</h3>
+                            <p>7 - הורשה ופולימורפיזם - מעקב</p>
+                        </a>
+                    </div>
+                </div>
+                </div>
+            <div class="calendar-section">
+                <div class="calendar">
+                    <div class="weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="days">
+                        <div class="day inactive">
+                            <span class="date">26</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">27</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">28</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">29</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">30</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='jan31.html'">
+                            <span class="date">31</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb1.html'">
+                            <span class="date">1</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb2.html'">
+                            <span class="date">2</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb3.html'">
+                            <span class="date">3</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb4.html'">
+                            <span class="date">4</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb5.html'">
+                            <span class="date">5</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb6.html'">
+                            <span class="date">6</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb7.html'">
+                            <span class="date">7</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb8.html'">
+                            <span class="date">8</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb9.html'">
+                            <span class="date">9</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day active" onclick="window.location.href='feb10.html'">
+                            <span class="date">10</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">11</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">12</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">13</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">14</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">15</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">16</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">17</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">18</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">19</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">20</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">21</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">22</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">23</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">24</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">25</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">26</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">27</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">28</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="day inactive">
+                            <span class="date">29</span>
+                            <span class="month">Feb</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="days">
-                <div class="day inactive">
-                    <span class="date">26</span>
-                    <span class="month">Jan</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">27</span>
-                    <span class="month">Jan</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">28</span>
-                    <span class="month">Jan</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">29</span>
-                    <span class="month">Jan</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">30</span>
-                    <span class="month">Jan</span>
-                </div>
-                <div class="day active" onclick="window.location.href='jan31.html'">
-                    <span class="date">31</span>
-                    <span class="month">Jan</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb1.html'">
-                    <span class="date">1</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb2.html'">
-                    <span class="date">2</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb3.html'">
-                    <span class="date">3</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb4.html'">
-                    <span class="date">4</span>
-                    <span class="month">Feb</span>
-                </div>
-                <!-- Rest of February (inactive days) -->
-                <div class="day active" onclick="window.location.href='feb5.html'">
-                    <span class="date">5</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb6.html'">
-                    <span class="date">6</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb7.html'">
-                    <span class="date">7</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb1.html'">
-                    <span class="date">8</span>
-                    <span class="month">Feb</span>
-                </div>
-                <!-- Week 2 -->
-                <div class="day active" onclick="window.location.href='feb9.html'">
-                    <span class="date">9</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day active" onclick="window.location.href='feb10.html'">
-                    <span class="date">10</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">11</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">12</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">13</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">14</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">15</span>
-                    <span class="month">Feb</span>
-                </div>
-                <!-- Week 3 -->
-                <div class="day inactive">
-                    <span class="date">16</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">17</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">18</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">19</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">20</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">21</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">22</span>
-                    <span class="month">Feb</span>
-                </div>
-                <!-- Week 4 -->
-                <div class="day inactive">
-                    <span class="date">23</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">24</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">25</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">26</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">27</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">28</span>
-                    <span class="month">Feb</span>
-                </div>
-                <div class="day inactive">
-                    <span class="date">29</span>
-                    <span class="month">Feb</span>
-                </div>
-            </div>
+
         </div>
     </div>
 </body>
