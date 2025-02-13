@@ -124,6 +124,7 @@
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
             padding: 1.5rem;
             height: fit-content;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
         .assignments-header {
             text-align: center;
@@ -175,8 +176,9 @@
 
         /* Calendar styles */
         .calendar-section {
-        .calendar-section {
             flex: 1;
+            max-width: 800px; /* Limit maximum width */
+
             min-width: 0;
         }
 
@@ -277,7 +279,7 @@
             }
 
         /* Responsive Design */
-        @media (max-width: 1200px) {
+        @media (max-width: 1024px) {
             .main-content {
                 gap: 0.5rem;
             }
@@ -285,6 +287,11 @@
             .assignments-panel {
                 width: 280px;
                 padding: 1rem;
+            }
+
+            .assignments-container {
+                grid-template-columns: 1fr; /* Stack items vertically */
+                gap: 0.5rem;
             }
 
             .assignment-item {
@@ -301,16 +308,26 @@
         }
 
         @media (max-width: 768px) {
-            .container {
+            body {
                 padding: 0.5rem;
             }
 
             .main-content {
-                padding: 0 0.5rem;
+                flex-direction: column; /* Stack panels vertically on very small screens */
+                align-items: stretch;
             }
 
             .assignments-panel {
-                width: 240px;
+                width: 100%; /* Full width on mobile */
+                margin-bottom: 1rem;
+            }
+
+            .assignments-container {
+                grid-template-columns: repeat(2, 1fr); /* Return to 2 columns */
+            }
+
+            .calendar-section {
+                width: 100%;
             }
 
             .day .date {
@@ -323,32 +340,31 @@
         }
 
         @media (max-width: 480px) {
-            .main-content {
-                gap: 0.25rem;
-            }
-
-            .assignments-panel {
-                width: 200px;
-            }
-
             .assignments-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Single column on very small screens */
+            }
+
+            .assignment-item {
+                margin: 0 auto;
+                max-width: 100%;
             }
         }
     </style>
     <style>
         .assignments-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Creates 2 columns */
-            grid-gap: 0.75rem;
-            padding: 0.5rem 0;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            width: 100%;
         }
 
         .assignment-item {
             background: linear-gradient(135deg, #fff5f8, #fff);
             border-radius: 15px;
             padding: 1rem;
+            width: 100%;
             border: 2px solid var(--border-color);
+            word-wrap: break-word; /* Ensure text wraps */
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(255, 105, 180, 0.1);
             text-decoration: none; /* Remove default link styling */
@@ -384,7 +400,10 @@
         }
 
         /* Adjust panel width for better fit */
-      
+        html, body {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
         </style>
 </head>
 <body>
