@@ -108,13 +108,14 @@
 
         .main-content {
             display: flex;
-            gap: 1rem;
+            gap: 2rem; /* Increased gap for better spacing */
             justify-content: center;
             align-items: flex-start;
             flex-wrap: nowrap;
-            min-width: 0;
             padding: 0 1rem;
         }
+
+
         /* Assignments Panel Styles */
         .assignments-panel {
             width: 320px;
@@ -124,8 +125,10 @@
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
             padding: 1.5rem;
             height: fit-content;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            margin: 0 auto; /* Center the panel */
         }
+
+
         .assignments-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -139,15 +142,26 @@
                 margin-bottom: 1rem;
             }
 
+        .assignments-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem; /* Increased gap between items */
+            width: 100%;
+            padding: 0.5rem; /* Add some padding inside the container */
+        }
+
         .assignment-item {
             background: linear-gradient(135deg, #fff5f8, #fff);
             border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            padding: 1rem;
+            width: 100%;
             border: 2px solid var(--border-color);
+            word-wrap: break-word;
             transition: all 0.3s ease;
-            animation: slideIn 0.5s ease-out forwards;
-            opacity: 0;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.1);
+            text-decoration: none;
+            display: block;
+            cursor: url('images/hover.png') 16 16, pointer;
         }
 
             .assignment-item:hover {
@@ -158,28 +172,31 @@
 
             .assignment-item h3 {
                 color: var(--primary-color);
-                margin-bottom: 0.5rem;
-                font-size: 1.2rem;
+                margin-bottom: 0.25rem;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
             }
 
             .assignment-item p {
                 color: var(--text-color);
-                font-size: 0.9rem;
-                line-height: 1.4;
+                font-size: 0.8rem;
+                line-height: 1.3;
             }
 
         .assignment-icon {
             display: inline-block;
             margin-right: 0.5rem;
+            font-size: 0.9rem;
             animation: rotate 4s linear infinite;
         }
 
         /* Calendar styles */
         .calendar-section {
             flex: 1;
-            max-width: 800px; /* Limit maximum width */
-
             min-width: 0;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .calendar {
@@ -188,8 +205,8 @@
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
             overflow: hidden;
             position: relative;
+            width: 100%;
         }
-
 
         .weekdays {
             display: grid;
@@ -211,20 +228,38 @@
             gap: 2px;
             background: var(--border-color);
             padding: 2px;
+            width: 100%;
         }
 
         .day {
             background: white;
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            padding: 1rem;
+            width: 100%;
+            padding-bottom: 100%;
             border-radius: 15px;
         }
+
+            .day .date,
+            .day .month {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                text-align: center;
+            }
+
+            .day .date {
+                margin-top: -10px;
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+
+            .day .month {
+                margin-top: 15px;
+                font-size: 0.8rem;
+                color: #666;
+            }
 
             .day.active {
                 cursor: url('images/hover.png') 16 16, pointer;
@@ -252,17 +287,6 @@
                     color: var(--text-color);
                 }
 
-            .day .date {
-                font-size: 1.2rem;
-                font-weight: bold;
-                margin-bottom: 0.5rem;
-            }
-
-            .day .month {
-                font-size: 0.8rem;
-                color: #666;
-            }
-
             .day.active::after {
                 content: '✈️';
                 position: absolute;
@@ -281,16 +305,15 @@
         /* Responsive Design */
         @media (max-width: 1024px) {
             .main-content {
-                gap: 0.5rem;
+                gap: 1.5rem;
             }
 
             .assignments-panel {
-                width: 280px;
-                padding: 1rem;
+                width: 300px;
             }
 
             .assignments-container {
-                grid-template-columns: 1fr; /* Stack items vertically */
+                grid-template-columns: 1fr;
                 gap: 0.5rem;
             }
 
@@ -313,98 +336,70 @@
             }
 
             .main-content {
-                flex-direction: column; /* Stack panels vertically on very small screens */
+                flex-direction: column;
                 align-items: stretch;
             }
 
             .assignments-panel {
-                width: 100%; /* Full width on mobile */
-                margin-bottom: 1rem;
+                width: 100%;
+                max-width: 600px; /* Limit width on mobile */
+                margin: 0 auto 1rem auto;
             }
 
             .assignments-container {
-                grid-template-columns: repeat(2, 1fr); /* Return to 2 columns */
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .calendar-section {
-                width: 100%;
+            .calendar {
+                margin: 0;
             }
 
-            .day .date {
-                font-size: 0.9rem;
+            .days {
+                gap: 1px;
+                padding: 1px;
             }
 
-            .day .month {
-                font-size: 0.65rem;
+            .day {
+                border-radius: 8px;
             }
+
+                .day .date {
+                    font-size: 1rem;
+                    margin-top: -8px;
+                }
+
+                .day .month {
+                    font-size: 0.7rem;
+                    margin-top: 12px;
+                }
         }
 
         @media (max-width: 480px) {
             .assignments-container {
-                grid-template-columns: 1fr; /* Single column on very small screens */
+                grid-template-columns: 1fr;
             }
 
             .assignment-item {
                 margin: 0 auto;
                 max-width: 100%;
             }
-        }
-    </style>
-    <style>
-        .assignments-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-            width: 100%;
-        }
 
-        .assignment-item {
-            background: linear-gradient(135deg, #fff5f8, #fff);
-            border-radius: 15px;
-            padding: 1rem;
-            width: 100%;
-            border: 2px solid var(--border-color);
-            word-wrap: break-word; /* Ensure text wraps */
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.1);
-            text-decoration: none; /* Remove default link styling */
-            display: block; /* Make the entire box clickable */
-            cursor: url('images/hover.png') 16 16, pointer; /* Use custom cursor */
-        }
-
-            /* Move hover effects to the anchor tag */
-            .assignment-item:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
-                border-color: var(--primary-color);
+            .day .date {
+                font-size: 0.9rem;
+                margin-top: -6px;
             }
 
-            .assignment-item h3 {
-                color: var(--primary-color);
-                margin-bottom: 0.25rem;
-                font-size: 1rem;
-                display: flex;
-                align-items: center;
+            .day .month {
+                font-size: 0.65rem;
+                margin-top: 10px;
             }
-
-            .assignment-item p {
-                color: var(--text-color);
-                font-size: 0.8rem;
-                line-height: 1.3;
-            }
-
-        .assignment-icon {
-            display: inline-block;
-            margin-right: 0.5rem;
-            font-size: 0.9rem;
         }
 
-        /* Adjust panel width for better fit */
         html, body {
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
-        </style>
+    </style>
 </head>
 <body>
     <div class="container">
