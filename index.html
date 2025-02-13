@@ -108,21 +108,23 @@
 
         .main-content {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
             justify-content: center;
             align-items: flex-start;
+            flex-wrap: nowrap;
+            min-width: 0;
+            padding: 0 1rem;
         }
-
         /* Assignments Panel Styles */
         .assignments-panel {
-            width: 350px;
+            width: 320px;
+            flex-shrink: 0;
             background: white;
             border-radius: 25px;
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
-            padding: 2rem;
-            margin-right: 2rem;
+            padding: 1.5rem;
+            height: fit-content;
         }
-
         .assignments-header {
             text-align: center;
             margin-bottom: 2rem;
@@ -173,8 +175,9 @@
 
         /* Calendar styles */
         .calendar-section {
+        .calendar-section {
             flex: 1;
-            max-width: 1000px;
+            min-width: 0;
         }
 
         .calendar {
@@ -184,6 +187,7 @@
             overflow: hidden;
             position: relative;
         }
+
 
         .weekdays {
             display: grid;
@@ -275,36 +279,60 @@
         /* Responsive Design */
         @media (max-width: 1200px) {
             .main-content {
-                flex-direction: column;
+                gap: 0.5rem;
             }
 
             .assignments-panel {
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 2rem;
-                order: -1;
-            }
-
-            .calendar-section {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
+                width: 280px;
                 padding: 1rem;
             }
 
-            .header h1 {
-                font-size: 2rem;
+            .assignment-item {
+                padding: 0.75rem;
+            }
+
+                .assignment-item h3 {
+                    font-size: 0.9rem;
+                }
+
+                .assignment-item p {
+                    font-size: 0.75rem;
+                }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .main-content {
+                padding: 0 0.5rem;
+            }
+
+            .assignments-panel {
+                width: 240px;
             }
 
             .day .date {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .day .month {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                gap: 0.25rem;
+            }
+
+            .assignments-panel {
+                width: 200px;
+            }
+
+            .assignments-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -356,10 +384,7 @@
         }
 
         /* Adjust panel width for better fit */
-        .assignments-panel {
-            width: 320px;
-            padding: 1.5rem;
-        }
+      
         </style>
 </head>
 <body>
